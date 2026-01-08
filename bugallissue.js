@@ -53,7 +53,7 @@ app.get("/array", (req, res) => {
   }
   res.send("Check console");
 });
-console.log("Check file"
+console.log("Check file");
 
 // --------------------------------------------------
 // ❌ MEDIUM BUG: Wrong condition check
