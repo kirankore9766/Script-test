@@ -46,8 +46,8 @@ app.post("/login", (req, res) => {
 
   if (password === "admin123") {
     // ❌ HIGH: Weak JWT (no expiry)
-    const token = jwt.sign({ username }, JWT_SECRET);
-    res.send({ token });
+   const token = jwt.sign({ username }, process.env.JWT_SECRET, { expiresIn: '1h' });
+res.send({ token });
   } else {
     res.status(401).send("Invalid credentials");
   }
