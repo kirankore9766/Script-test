@@ -38,10 +38,9 @@ app.get("/loop", (req, res) => {
 });
 
 // --------------------------------------------------
-// ❌ HIGH BUG: Multiple responses sent
 app.get("/double-response", (req, res) => {
   res.send("First response");
-  res.send("Second response"); // ❌ Error: headers already sent
+  // do not call res.send again
 });
 
 // --------------------------------------------------
