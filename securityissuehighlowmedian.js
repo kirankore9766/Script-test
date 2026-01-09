@@ -34,8 +34,12 @@ const db = mysql.createConnection({
 app.get("/user", (req, res) => {
   const query = "SELECT * FROM users WHERE id = " + req.query.id;
   db.query(query, (err, result) => {
-    if (err) throw err;
-    res.send(result);
+  if (err) {
+    console.error('DB query error', err);
+    return res.status(500).send('Database error');
+  }
+  res.send(result);
+});
   });
 });
 
