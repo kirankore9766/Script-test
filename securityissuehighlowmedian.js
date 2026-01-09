@@ -57,13 +57,17 @@ res.send({ token });
 });
 
 // --------------------------------------------------
-// ❌ HIGH: JWT decoded without verification
-app.get("/profile", (req, res) => {
-  const token = req.headers.authorization;
-  const decoded = jwt.decode(token); // ❌ no verify
-  res.send(decoded);
+app.get('/profile', (req, res) => {
+  const auth = req.headers.authorization;
+  if (!auth || !auth.startsWith('Bearer ')) return res.status(401).send('Missing token');
+  const token = auth.split(' ')[1];
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || JWT_SECRET);
+    res.send(decoded);
+  } catch (err) {
+    res.status(401).send('Invalid token');
+  }
 });
-
 // --------------------------------------------------
 // ❌ HIGH: Remote Code Execution
 app.post("/run", (req, res) => {
